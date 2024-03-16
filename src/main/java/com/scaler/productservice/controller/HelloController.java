@@ -1,4 +1,4 @@
-package com.scaler.productservice;
+package com.scaler.productservice.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
