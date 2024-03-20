@@ -1,19 +1,28 @@
 package com.scaler.productservice.controller;
 
 import com.scaler.productservice.models.Product;
+import com.scaler.productservice.services.ProductService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
+    private ProductService productService;
+    private RestTemplate restTemplate;
+    public ProductController(ProductService productService , RestTemplate restTemplate){
+        this.productService = productService;
+        this.restTemplate = restTemplate;
+    }
+
     //to get all the products
     @GetMapping()
     public List<Product> getAllProducts(){
-        return new ArrayList<>();
+        return productService.getAllProducts();
     }
 
     //to single product
