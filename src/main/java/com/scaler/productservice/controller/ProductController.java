@@ -1,7 +1,11 @@
 package com.scaler.productservice.controller;
 
+import com.scaler.productservice.exceptions.ProductNotExistsException;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,13 +26,22 @@ public class ProductController {
     //to get all the products
     @GetMapping()
     public List<Product> getAllProducts(){
+
+        ResponseEntity<List<Product>> response = new ResponseEntity<>(productService.getAllProducts(),
+                HttpStatus.FORBIDDEN);
+
         return productService.getAllProducts();
     }
 
     //to single product
     @GetMapping("/{id}")
-    public Product getSingleProduct(@PathVariable("id") Long id){
-        return new Product();
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotExistsException {
+
+        return new ResponseEntity<>(
+                productService.getSingleProduct(id),
+                HttpStatus.OK
+        );
+
     }
 
     //to add new product

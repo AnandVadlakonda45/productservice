@@ -1,6 +1,7 @@
 package com.scaler.productservice.services;
 
 import com.scaler.productservice.dtos.FakeStoreProductDto;
+import com.scaler.productservice.exceptions.ProductNotExistsException;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,16 @@ public class FakeStoreProductService implements ProductService{
         return product;
     }
     @Override
-    public Product getSingleProduct(Long id) {
+    public Product getSingleProduct(Long id) throws ProductNotExistsException {
         FakeStoreProductDto productDto = restTemplate.getForObject(
-                "https://fakestoreapi.com/products" + id,
+                "https://fakestoreapi.com/products/" + id,
                     FakeStoreProductDto.class
         );
-
+        if(productDto == null){
+            throw new ProductNotExistsException(
+                    "Product with id: " + id + " doesn't exist."
+            );
+        }
         return convertFakeStoreProductToProduct(productDto);
     }
 
