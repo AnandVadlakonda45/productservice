@@ -9,5 +9,4 @@ public class ArithmeticExceptionDto {
 
     private String message;
 
-
 }

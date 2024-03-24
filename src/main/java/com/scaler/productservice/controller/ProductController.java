@@ -1,6 +1,7 @@
 package com.scaler.productservice.controller;
 
 import com.scaler.productservice.exceptions.ProductNotExistsException;
+import com.scaler.productservice.models.FakeProduct;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.ProductService;
 import org.springframework.http.HttpStatus;
@@ -47,21 +48,23 @@ public class ProductController {
     //to add new product
     @PostMapping("/")
     public Product addNewProduct(@RequestBody Product product){
-        Product p = new Product();
-        p.setTitle("A new product");
-        return p;
+//        Product p = new Product();
+//        p.setTitle("A new product");
+        return  productService.addNewProduct(product);
     }
 
     //to update the product
     @PatchMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") Long id ,@RequestBody Product product){
-        return new Product();
+    public void updateProduct(@PathVariable("id") Long id ,@RequestBody Product product){
+        //return new Product();
+        productService.updateProduct(id,product);
     }
 
     //to replace the product
     @PutMapping("/{id}")
     public Product replaceProduct(@PathVariable ("id") Long id, @RequestBody Product product){
-        return new Product();
+        //return new Product();
+        return productService.replaceProduct(id, product);
     }
 
     //to delete the product
